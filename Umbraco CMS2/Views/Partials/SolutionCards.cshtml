@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<div class="row header-row">
+    <div class="col-lg-6 header">Solutions</div>
+    <div class="col-lg-6 text-right">
+        <a href="#" class="icon-navigational-arrow"><</a>
+        <a href="#" class="icon-navigational-arrow">></a>
+    </div>
+</div>
+<div class="row ">
+    @{
+        var SolutionCards = CurrentPage.SolutionCardItem.Take(4);
+        foreach(var card in SolutionCards)
+        {
+            <div class="col-lg-3 col-md-3 col-sm-3 solution-card">
+                <div class="image" style="background-image:url(@card.image)">
+                    <span>@card.title</span>
+                </div>
+                <div class="card-content">
+                    <p>
+                        @card.content
+                    </p>
+                    <a href="@card.url">@card.linkText</a>
+                </div>
+            </div>
+        }
+    }
+</div>

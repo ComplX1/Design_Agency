@@ -1,0 +1,67 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+}
+
+@{ Html.RenderPartial("Carousel"); }
+
+<div class="row">
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="col-md-10 col-lg-10 solution-cards">
+        @{ Html.RenderPartial("SolutionCards"); }
+    </div>             
+    <div class="col-md-1 col-lg-1"></div>
+</div>
+
+<div class="row grey">
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="col-lg-5">
+        @{ Html.RenderPartial("Ask_An_Expert_Form"); }
+    </div>
+    <div class="col-lg-5">
+        <h3>News</h3>
+        <div class="news-home">
+            @{
+                if (@Umbraco.TypedContent(1116).Children.Any())
+                {
+                    foreach (var page in @Umbraco.TypedContent(1116).Children.OrderByDescending(na => na.GetPropertyValue("date")).Take(3))
+                    {
+                        <article>
+                            <header>@page.GetPropertyValue("articleTitle")</header>
+                            @{
+                            DateTime dt = Convert.ToDateTime(page.GetPropertyValue("date")); 
+                            //this should be in some central business logic.
+                            //string GetDaySuffix(int day)
+                            //{
+                            string suffix = string.Empty;
+                                switch (dt.Day)
+                                {
+                                    case 1:
+                                    case 21:
+                                    case 31:
+                                        suffix = "st";
+                                        break;
+                                    case 2:
+                                    case 22:
+                                        suffix = "nd";
+                                        break;
+                                    case 3:
+                                    case 23:
+                                        suffix =  "rd";
+                                        break;
+                                    default:
+                                        suffix =  "th";
+                                        break;
+                                }
+                            //}
+                            }
+                            <p>@string.Format("{0: dd}{1} {0:MMMM yyyy}", dt, suffix)</p>
+                        </article>
+                        <hr />
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-1"></div>
+</div>
